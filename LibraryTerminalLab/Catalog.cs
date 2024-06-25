@@ -21,7 +21,7 @@ public class Catalog
             new Book("The Road", "Cormac McCarthy",BookStatus.OnShelf, "Post-Apocalyptic Fiction"),
             new Book("One Hundred Years of Solitude","Gabriel Garcia Marquez",BookStatus.OnShelf,"Magical Realism")
         };
-    private List<Book> SearchAllBooks(string userInput)
+    private List<Book> SearchBooks(string userInput)
     {
            List<Book> results = [];
 
