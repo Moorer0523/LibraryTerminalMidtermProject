@@ -3,7 +3,7 @@
 public class Catalog
 {
 
-    public List<Book> BookList = new List<Book>
+    private List<Book> BookList = new List<Book>
         {
             new Book("1984", "George Orwell",BookStatus.OnShelf, "Dystopian Fiction"),
             new Book("To Kill a Mockingbird", "Harper Lee",BookStatus.OnShelf, "Southern Gothic"),
@@ -21,4 +21,23 @@ public class Catalog
             new Book("The Road", "Cormac McCarthy",BookStatus.OnShelf, "Post-Apocalyptic Fiction"),
             new Book("One Hundred Years of Solitude","Gabriel Garcia Marquez",BookStatus.OnShelf,"Magical Realism")
         };
+    private List<Book> SearchBooks(string userInput)
+    {
+           List<Book> results = [];
+
+        foreach (Book book in BookList)
+        {
+            //hate how this looks, want to refactor to simplify
+            if (book.Title.Contains(userInput, StringComparison.InvariantCultureIgnoreCase) ||
+                book.Author.Contains(userInput, StringComparison.InvariantCultureIgnoreCase) ||
+                book.Genre.Contains(userInput, StringComparison.InvariantCultureIgnoreCase))
+            {
+                results.Add(book);
+            }
+        }
+        //need to add in handling in main method to account for no results found
+        return results;
+
+    }
+    private List<Book> ListAllBooks() { return BookList; }
    }
