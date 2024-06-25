@@ -1,9 +1,9 @@
 ﻿namespace LibraryTerminalLab;
 
-public class Catalog
+public static class Catalog
 {
 
-    private List<Book> BookList = new List<Book>
+    private static List<Book> BookList = new List<Book>
         {
             new Book("1984", "George Orwell",BookStatus.OnShelf, "Dystopian Fiction"),
             new Book("To Kill a Mockingbird", "Harper Lee",BookStatus.OnShelf, "Southern Gothic"),
@@ -21,29 +21,48 @@ public class Catalog
             new Book("The Road", "Cormac McCarthy",BookStatus.OnShelf, "Post-Apocalyptic Fiction"),
             new Book("One Hundred Years of Solitude","Gabriel Garcia Marquez",BookStatus.OnShelf,"Magical Realism")
         };
-    public List<Book> SearchBooks(string userInput)
-    {
-           List<Book> results = [];
 
-        foreach (Book book in BookList)
+    public static List<Book> SearchBooks()
+    {
+        List<Book> results = [];
+
+        while (true)
         {
-            //hate how this looks, want to refactor to simplify
-            if (book.Title.Contains(userInput, StringComparison.InvariantCultureIgnoreCase) ||
-                book.Author.Contains(userInput, StringComparison.InvariantCultureIgnoreCase) ||
-                book.Genre.Contains(userInput, StringComparison.InvariantCultureIgnoreCase))
+            try
             {
-                results.Add(book);
+                Console.WriteLine("What book are you looking for? (Title/Author/Genre)");
+                string userInput = Console.ReadLine();
+
+                foreach (Book book in BookList)
+                {
+                    //hate how this looks, want to refactor to simplify
+                    if (book.Title.Contains(userInput, StringComparison.InvariantCultureIgnoreCase) ||
+                        book.Author.Contains(userInput, StringComparison.InvariantCultureIgnoreCase) ||
+                        book.Genre.Contains(userInput, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        results.Add(book);
+                    }
+                }
+
+                if (results.Count > 0)
+                    return results;
+
+                Console.WriteLine("No matching results found, please saerch again.");
             }
+            catch
+            {
+                Console.WriteLine("Error reading your input, please try again");
+            }
+
         }
-        //need to add in handling in main method to account for no results found
-        return results;
+
 
     }
-    public List<Book> ListAllBooks() 
+    public static List<Book> ListAllBooks() 
     { 
         return BookList; 
     }
-    public List<Book> ListCheckedOut()
+    public static List<Book> ListCheckedOut()
     {
         return BookList.Where(x => x.Status == BookStatus.CheckedOut).ToList();
     }
