@@ -21,7 +21,7 @@ public class Catalog
             new Book("The Road", "Cormac McCarthy",BookStatus.OnShelf, "Post-Apocalyptic Fiction"),
             new Book("One Hundred Years of Solitude","Gabriel Garcia Marquez",BookStatus.OnShelf,"Magical Realism")
         };
-    private List<Book> SearchBooks(string userInput)
+    public List<Book> SearchBooks(string userInput)
     {
            List<Book> results = [];
 
@@ -39,5 +39,12 @@ public class Catalog
         return results;
 
     }
-    private List<Book> ListAllBooks() { return BookList; }
-   }
+    public List<Book> ListAllBooks() 
+    { 
+        return BookList; 
+    }
+    public List<Book> ListCheckedOut()
+    {
+        return BookList.Where(x => x.Status == BookStatus.CheckedOut).ToList();
+    }
+}
