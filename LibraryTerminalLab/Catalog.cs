@@ -39,5 +39,12 @@ public class Catalog
         return results;
 
     }
-    private List<Book> ListAllBooks() { return BookList; }
-   }
+    private List<Book> ListAllBooks() 
+    { 
+        return BookList; 
+    }
+    public List<Book> ListCheckedOut()
+    {
+        return BookList.Where(x => x.Status == BookStatus.CheckedOut).ToList();
+    }
+}
