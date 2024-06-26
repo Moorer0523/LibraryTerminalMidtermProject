@@ -16,13 +16,7 @@ while (true)
    switch(userInput)
     {
         case "1":
-            Console.WriteLine("What book are you looking for? (Title/Author/Genre)");
-            string Input = Console.ReadLine();
-            //pending merger from method
-            //bool bookFound = Catalog.SearchBooks(Input);
-
-            //if (!bookFound) 
-                Console.WriteLine("Sorry Invaild input please try again.");
+            List<Book> books = Catalog.SearchBooks();
             break;
         case "2":
             Console.WriteLine("Here is a List of All Books:");
