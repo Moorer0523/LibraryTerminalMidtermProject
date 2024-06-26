@@ -23,4 +23,28 @@ public class Book
         Status = status;
         Genre = genre;
     }
+    public string SelectABook(string keyword)
+    {
+
+        BookList.Contains(keyword).ToLower().ToList();
+
+
+    }
+
+    public string ReturnBook(string returnBook)
+    {
+        foreach (string b in BookList)
+        {
+            if (b.Title.Contains(returnBook) || (b.Author.Contains(returnBook) || (b.Genre.Contains(returnBook))
+            {
+
+                BookList.Add(returnBook(b));
+            }
+        }
+
+
+    }
+
+
+}
 }
