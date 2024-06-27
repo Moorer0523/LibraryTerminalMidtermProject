@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using Microsoft.VisualBasic;
+using Spectre.Console;
 
 namespace LibraryTerminalLab;
 
@@ -16,11 +17,20 @@ public class Book
     public DateTime DueDate { get; set; }
     public string Genre { get; set; }
 
-    public Book(string title, string author, BookStatus status, string genre) //Need to add status when created
+    public Book(string title, string author, BookStatus status, string genre)
     {
         Title = title;
         Author = author;
         Status = status;
         Genre = genre;
+    }
+
+    public Book(string title, string author, BookStatus status, string genre, DateTime dueDate)
+    {
+        Title = title;
+        Author = author;
+        Status = status;
+        Genre = genre;
+        DueDate = dueDate;
     }
 }
