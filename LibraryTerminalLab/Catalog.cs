@@ -66,4 +66,32 @@ public static class Catalog
     {
         return BookList.Where(x => x.Status == BookStatus.CheckedOut).ToList();
     }
+
+    public static void CheckoutBook(Book book)
+    {
+        if (book.Status == BookStatus.OnShelf)
+        {
+            book.Status = BookStatus.CheckedOut;
+            book.DueDate = DateTime.Today.AddDays(14);
+            Console.WriteLine($"Book '{book.Title}' checked out successfully. Due date is {book.DueDate.ToShortDateString()}.");
+        }
+        else
+        {
+            Console.WriteLine($"Sorry, '{book.Title}' is currently {book.Status}. Due date: {book.DueDate.ToShortDateString()}.");
+        }
+    }
+
+    public static void ReturnBook(Book book)
+    {
+        if (book.Status == BookStatus.CheckedOut)
+        {
+            book.Status = BookStatus.OnShelf;
+            book.DueDate = DateTime.MinValue;
+            Console.WriteLine($"Book '{book.Title}' returned successfully.");
+        }
+        else
+        {
+            Console.WriteLine($"Book '{book.Title}' is not currently checked out.");
+        }
+    }
 }
