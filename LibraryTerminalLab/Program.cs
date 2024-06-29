@@ -11,6 +11,8 @@ string[] menuOptions = [
         "4.Exit:"
    ];
 
+Catalog.Load();
+
 while (true)
 {
 
@@ -48,6 +50,7 @@ while (true)
             break;
         case 4:
             Console.WriteLine("Thank You GoodBye!");
+            Catalog.Save();
             return;
         default:
             Console.WriteLine("Invalid choice. Please select 1-4.");
