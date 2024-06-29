@@ -1,4 +1,6 @@
-﻿namespace LibraryTerminalLab;
+﻿using Spectre.Console;
+
+namespace LibraryTerminalLab;
 
 public static class Catalog
 {
@@ -65,5 +67,51 @@ public static class Catalog
     public static List<Book> ListCheckedOut()
     {
         return BookList.Where(x => x.Status == BookStatus.CheckedOut).ToList();
+    }
+
+    public static Book SelectABook(List<Book> books)
+    {
+        Table table = new Table().Centered();
+
+        table.Title("Available Books");
+
+
+        AnsiConsole.Live(table).Start(screen =>
+        {
+            table.AddColumn("Menu Option");
+            screen.Refresh();
+            Thread.Sleep(100);
+            table.AddColumn("Title");
+            screen.Refresh();
+            Thread.Sleep(100);
+            table.AddColumn("Author");
+            screen.Refresh();
+            Thread.Sleep(100);
+            table.AddColumn("Book Status");
+            screen.Refresh();
+            Thread.Sleep(100);
+            table.AddColumn("Book Genre");
+            screen.Refresh();
+            Thread.Sleep(100);
+
+            for (int i = 0; i < books.Count(); i++)
+            {
+                table.AddRow((i + 1).ToString(), books[i].Title, books[i].Author, books[i].Status.ToString(), books[i].Genre);
+                screen.Refresh();
+                Thread.Sleep(100);
+            }
+        });
+
+        Console.WriteLine("Please make a selection");
+
+        int selectedIndex = AnsiConsole.Prompt(
+            new TextPrompt<int>("Enter the index of the book you want to select:")
+            .Validate(index => index - 1 >= 0 && index - 1 < books.Count ?
+            ValidationResult.Success() : ValidationResult.Error("Invalid index")
+            )) - 1;
+
+        var selectedBook = books[selectedIndex];
+
+        return selectedBook;
     }
 }
