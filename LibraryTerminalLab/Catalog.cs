@@ -102,8 +102,6 @@ public static class Catalog
             }
         });
 
-        Console.WriteLine("Please make a selection");
-
         int selectedIndex = AnsiConsole.Prompt(
             new TextPrompt<int>("Enter the index of the book you want to select:")
             .Validate(index => index - 1 >= 0 && index - 1 < books.Count ?
