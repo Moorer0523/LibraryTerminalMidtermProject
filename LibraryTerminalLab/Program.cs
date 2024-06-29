@@ -5,10 +5,10 @@ using System.Net.NetworkInformation;
 
 
 string[] menuOptions = [
-   "1.Search for a Book to check out:",
-        "2.List All Books:",
-        "3.Return a Book:",
-        "4.Exit:"
+    "Search for a Book to check out:",
+    "List All Books:",
+    "Return a Book:",
+    "Exit:"
    ];
 
 while (true)
@@ -26,25 +26,19 @@ while (true)
 
     switch (userSwitch + 1)
     {
-        case 1:
+        case 1: //Search for a book and check it out
             List<Book> books = Catalog.SearchBooks();
             //select a book from the list -- gives us a book back. Theoretical Section
-            //Book placeholderBook;
-            //if (placeholderBook.Status == BookStatus.OnShelf)
-            //    Catalog.Checkout();
-            //else
-            //    Console.WriteLine($"Sorry, this book isn't here: {placeholderBook.DueDate}");
+            Book selectedBook = Catalog.SelectABook(books);
+
+            Catalog.CheckoutBook(selectedBook);
             break;
-        case 2:
+        case 2: //list all the books and attempt to check one out
             Console.WriteLine("Here is a List of All Books:");
-            //Theoretical Section
-            //Catalog.SelectABook(Catalog.ListAllBooks());
+            Catalog.CheckoutBook(Catalog.SelectABook(Catalog.ListAllBooks()));
             break;
-        case 3:
-            Console.WriteLine("What book are you returning?");
-            string returnInput = Console.ReadLine();
-            //pending merger from method
-            //Catalog.ReturnBook();
+        case 3: //search for a book and attempt to return it
+            Catalog.ReturnBook(Catalog.SelectABook(Catalog.ListCheckedOut()));
             break;
         case 4:
             Console.WriteLine("Thank You GoodBye!");
@@ -52,7 +46,6 @@ while (true)
         default:
             Console.WriteLine("Invalid choice. Please select 1-4.");
             break;
-
     }
 }
 
