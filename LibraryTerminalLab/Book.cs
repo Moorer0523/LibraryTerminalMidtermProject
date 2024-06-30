@@ -33,4 +33,5 @@ public class Book
         Genre = genre;
         DueDate = dueDate;
     }
+    public Book() { }
 }
