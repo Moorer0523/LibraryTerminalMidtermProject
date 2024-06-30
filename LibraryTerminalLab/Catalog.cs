@@ -1,4 +1,3 @@
-
 using Newtonsoft.Json;
 using Spectre.Console;
 
@@ -32,9 +31,7 @@ public static class Catalog
             new Book("The Road", "Cormac McCarthy",BookStatus.OnShelf, "Post-Apocalyptic Fiction"),
             new Book("One Hundred Years of Solitude","Gabriel Garcia Marquez",BookStatus.OnShelf,"Magical Realism")
         };
-
-
-
+  
     public static List<Book> SearchBooks()
     {
         List<Book> results = [];
@@ -66,21 +63,47 @@ public static class Catalog
             {
                 Console.WriteLine("Error reading your input, please try again");
             }
-
         }
-
-
     }
+  
     public static List<Book> ListAllBooks() 
     { 
         return BookList; 
     }
+  
     public static List<Book> ListCheckedOut()
     {
         return BookList.Where(x => x.Status == BookStatus.CheckedOut).ToList();
     }
 
+    public static void CheckoutBook(Book book)
+    {
+        if (book.Status == BookStatus.OnShelf)
+        {
+            book.Status = BookStatus.CheckedOut;
+            book.DueDate = DateTime.Today.AddDays(14);
+            Console.WriteLine($"Book '{book.Title}' checked out successfully. Due date is {book.DueDate.ToShortDateString()}.");
+        }
+        else
+        {
+            Console.WriteLine($"Sorry, '{book.Title}' is currently {book.Status}. Due date: {book.DueDate.ToShortDateString()}.");
+        }
+    }
 
+    public static void ReturnBook(Book book)
+    {
+        if (book.Status == BookStatus.CheckedOut)
+        {
+            book.Status = BookStatus.OnShelf;
+            book.DueDate = DateTime.MinValue;
+            Console.WriteLine($"Book '{book.Title}' returned successfully.");
+        }
+        else
+        {
+            Console.WriteLine($"Book '{book.Title}' is not currently checked out.");
+        }
+    }
+  
     public static Book SelectABook(List<Book> books)
     {
         Table table = new Table().Centered();
@@ -163,7 +186,6 @@ public static class Catalog
             AnsiConsole.WriteLine($"Error occurred with loading the file: {ex.Message}");
             BookList = BackupCatalog;
         }
-
 
     }
 }
