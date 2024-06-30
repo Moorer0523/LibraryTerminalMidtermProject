@@ -1,11 +1,20 @@
-﻿using Spectre.Console;
+
+using Newtonsoft.Json;
+using Spectre.Console;
 
 namespace LibraryTerminalLab;
 
 public static class Catalog
 {
 
-    private static List<Book> BookList = new List<Book>
+    //couldn't make readonly and static, unsure if static is the right way to go with this class
+    private static string directoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\CatalogStorage");
+    private static string filePath = Path.Combine(directoryPath, "CurrentCatalog.txt");
+
+    private static List<Book> BookList = new List<Book> { };
+
+    //introduced hardcoded list to make sure something is able to be referenced during program run
+    private static List<Book> BackupCatalog = new List<Book>
         {
             new Book("1984", "George Orwell",BookStatus.OnShelf, "Dystopian Fiction"),
             new Book("To Kill a Mockingbird", "Harper Lee",BookStatus.OnShelf, "Southern Gothic"),
@@ -23,6 +32,8 @@ public static class Catalog
             new Book("The Road", "Cormac McCarthy",BookStatus.OnShelf, "Post-Apocalyptic Fiction"),
             new Book("One Hundred Years of Solitude","Gabriel Garcia Marquez",BookStatus.OnShelf,"Magical Realism")
         };
+
+
 
     public static List<Book> SearchBooks()
     {
@@ -69,6 +80,7 @@ public static class Catalog
         return BookList.Where(x => x.Status == BookStatus.CheckedOut).ToList();
     }
 
+
     public static Book SelectABook(List<Book> books)
     {
         Table table = new Table().Centered();
@@ -111,5 +123,47 @@ public static class Catalog
         var selectedBook = books[selectedIndex];
 
         return selectedBook;
+    }
+  
+    public static void Save()
+    {
+        try
+        {
+            var json = JsonConvert.SerializeObject(BookList, Formatting.Indented);
+            File.WriteAllText(filePath, json);
+        }
+        catch (Exception ex)
+        {
+            AnsiConsole.WriteLine($"Error occurred with saving the file: {ex.Message}");
+        }
+    }
+
+    public static void Load()
+    {
+        try
+        {
+            //checks for directory folder, creates if doesn't exist.
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            //checks for file existing, loads default hardcoded if not
+            if (!File.Exists(filePath))
+            {
+                AnsiConsole.WriteLine("No saved catalog found, writing a new catalog.");
+                BookList = BackupCatalog;
+            }
+
+            var json = File.ReadAllText(filePath);
+            BookList = JsonConvert.DeserializeObject<List<Book>>(json);
+        }
+        catch (Exception ex)
+        {
+            AnsiConsole.WriteLine($"Error occurred with loading the file: {ex.Message}");
+            BookList = BackupCatalog;
+        }
+
+
     }
 }
