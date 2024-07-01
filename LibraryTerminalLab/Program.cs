@@ -22,7 +22,14 @@ AnsiConsole.Progress()
 
         if (!Catalog.Load())
         {
+            AnsiConsole.WriteLine("No previous catalog found, restoring from backup...");
             topic1 = "Creating new catalog";
+            Thread.Sleep(100);
+        }
+        else
+        {
+            AnsiConsole.WriteLine("Catalog loaded successfully!");
+            Thread.Sleep(100);
         }
         // Define tasks
         var task1 = ctx.AddTask($"[green]{topic1}[/]");
