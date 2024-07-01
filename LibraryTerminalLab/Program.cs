@@ -11,15 +11,55 @@ string[] menuOptions = [
     "Exit:"
    ];
 
-Catalog.Load();
+//fun progress bar
+AnsiConsole.Progress()
+    .Start(ctx =>
+    {
+        string topic1 = "Loading catalog";
+
+        var bribeColor = "[blue]";
+
+        if (!Catalog.Load())
+        {
+            topic1 = "Creating new catalog";
+        }
+        // Define tasks
+        var task1 = ctx.AddTask($"[green]{topic1}[/]");
+        var task2 = ctx.AddTask("[teal]Generating Menu[/]");
+        var task3 = ctx.AddTask($"{bribeColor}Bribing Jonathan and Michael[/]");
+        while (!ctx.IsFinished)
+        {
+            task1.Increment(1.43);
+            task2.Increment(1.75);
+
+            Thread.Sleep(70);
+            if (task3.Value > 50)
+            {
+                task3.StopTask();
+                task3.Description("[red]ERROR: Bribe not found[/]");
+            }
+            else
+                task3.Increment(1.1);
+        }
+    });
+
+//replaced with above progress bar
+//Catalog.Load();
+
+
+//artsy title text
+var mainTitle = 
+    new FigletText("Welcome to the Library Terminal")
+        .Centered()
+        .Color(Color.Red);
 
 while (true)
 {
 
-
+    AnsiConsole.Write(mainTitle);
     var userSelection = AnsiConsole.Prompt(
     new SelectionPrompt<string>()
-        .Title("Welcome to Library Terminal")
+        .Title("Please select an option below:")
         .PageSize(10)
         .AddChoices(menuOptions)
     );

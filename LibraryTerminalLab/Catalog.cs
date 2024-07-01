@@ -96,11 +96,11 @@ public static class Catalog
         {
             book.Status = BookStatus.OnShelf;
             book.DueDate = DateTime.MinValue;
-            Console.WriteLine($"Book '{book.Title}' returned successfully.");
+            Console.WriteLine($"Book '{book.Title}' returned successfully.",Color.Green);
         }
         else
         {
-            Console.WriteLine($"Book '{book.Title}' is not currently checked out.");
+            Console.WriteLine($"Book '{book.Title}' is not currently checked out.", Color.Blue);
         }
     }
   
@@ -152,6 +152,11 @@ public static class Catalog
     {
         try
         {
+            //checks for directory folder, creates if doesn't exist.
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
             var json = JsonConvert.SerializeObject(BookList, Formatting.Indented);
             File.WriteAllText(filePath, json);
         }
@@ -161,30 +166,30 @@ public static class Catalog
         }
     }
 
-    public static void Load()
+    public static bool Load()
     {
         try
         {
-            //checks for directory folder, creates if doesn't exist.
-            if (!Directory.Exists(directoryPath))
-            {
-                Directory.CreateDirectory(directoryPath);
-            }
-
             //checks for file existing, loads default hardcoded if not
             if (!File.Exists(filePath))
             {
-                AnsiConsole.WriteLine("No saved catalog found, writing a new catalog.");
+
                 BookList = BackupCatalog;
+                return true;
+            }
+            else
+            {
+                var json = File.ReadAllText(filePath);
+                BookList = JsonConvert.DeserializeObject<List<Book>>(json);
+                return false;
             }
 
-            var json = File.ReadAllText(filePath);
-            BookList = JsonConvert.DeserializeObject<List<Book>>(json);
         }
         catch (Exception ex)
         {
             AnsiConsole.WriteLine($"Error occurred with loading the file: {ex.Message}");
             BookList = BackupCatalog;
+            return false;
         }
 
     }

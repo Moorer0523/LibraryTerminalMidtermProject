@@ -1,0 +1,107 @@
+[
+  {
+    "Title": "1984",
+    "Author": "George Orwell",
+    "Status": 1,
+    "DueDate": "0001-01-01T00:00:00",
+    "Genre": "Dystopian Fiction"
+  },
+  {
+    "Title": "To Kill a Mockingbird",
+    "Author": "Harper Lee",
+    "Status": 1,
+    "DueDate": "0001-01-01T00:00:00",
+    "Genre": "Southern Gothic"
+  },
+  {
+    "Title": "The Great Gatsby",
+    "Author": "F. Scott Fitzgerald",
+    "Status": 1,
+    "DueDate": "0001-01-01T00:00:00",
+    "Genre": "Literary Fiction"
+  },
+  {
+    "Title": "Pride and Prejudice",
+    "Author": "Jane Austen",
+    "Status": 1,
+    "DueDate": "0001-01-01T00:00:00",
+    "Genre": "Romance"
+  },
+  {
+    "Title": "Brave New World",
+    "Author": "Aldous Huxley",
+    "Status": 1,
+    "DueDate": "0001-01-01T00:00:00",
+    "Genre": "Science Fiction"
+  },
+  {
+    "Title": "The Catcher in the Rye",
+    "Author": "J.D. Salinger",
+    "Status": 0,
+    "DueDate": "2024-07-14T00:00:00-04:00",
+    "Genre": "Coming-of-Age Fiction"
+  },
+  {
+    "Title": "Catch-22",
+    "Author": "Joseph Heller",
+    "Status": 0,
+    "DueDate": "2024-07-14T00:00:00-04:00",
+    "Genre": "Satire"
+  },
+  {
+    "Title": "Moby-Dick",
+    "Author": "Herman Melville",
+    "Status": 1,
+    "DueDate": "0001-01-01T00:00:00",
+    "Genre": "Adventure Fiction"
+  },
+  {
+    "Title": "War and Peace",
+    "Author": "Leo Tolstoy",
+    "Status": 1,
+    "DueDate": "0001-01-01T00:00:00",
+    "Genre": "Historical Fiction"
+  },
+  {
+    "Title": "The Lord of the Rings",
+    "Author": "J.R.R. Tolkien",
+    "Status": 1,
+    "DueDate": "0001-01-01T00:00:00",
+    "Genre": "Fantasy"
+  },
+  {
+    "Title": "Crime and Punishment",
+    "Author": "Fyodor Dostoevsky",
+    "Status": 0,
+    "DueDate": "2024-07-14T00:00:00-04:00",
+    "Genre": "Psychological Fiction"
+  },
+  {
+    "Title": "Beloved",
+    "Author": "Toni Morrison",
+    "Status": 1,
+    "DueDate": "0001-01-01T00:00:00",
+    "Genre": "Historical Fiction"
+  },
+  {
+    "Title": "Slaughterhouse-Five",
+    "Author": "Kurt Vonnegut",
+    "Status": 1,
+    "DueDate": "0001-01-01T00:00:00",
+    "Genre": "Science Fiction"
+  },
+  {
+    "Title": "The Road",
+    "Author": "Cormac McCarthy",
+    "Status": 1,
+    "DueDate": "0001-01-01T00:00:00",
+    "Genre": "Post-Apocalyptic Fiction"
+  },
+  {
+    "Title": "One Hundred Years of Solitude",
+    "Author": "Gabriel Garcia Marquez",
+    "Status": 1,
+    "DueDate": "0001-01-01T00:00:00",
+    "Genre": "Magical Realism"
+  }
+]
