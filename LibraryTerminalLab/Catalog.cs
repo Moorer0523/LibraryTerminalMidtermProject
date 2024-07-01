@@ -1,4 +1,6 @@
-﻿namespace LibraryTerminalLab;
+﻿using static System.Collections.Specialized.BitVector32;
+
+namespace LibraryTerminalLab;
 
 public static class Catalog
 {
@@ -33,16 +35,11 @@ public static class Catalog
                 Console.WriteLine("What book are you looking for? (Title/Author/Genre)");
                 string userInput = Console.ReadLine();
 
-                foreach (Book book in BookList)
-                {
-                    //hate how this looks, want to refactor to simplify
-                    if (book.Title.Contains(userInput, StringComparison.InvariantCultureIgnoreCase) ||
-                        book.Author.Contains(userInput, StringComparison.InvariantCultureIgnoreCase) ||
-                        book.Genre.Contains(userInput, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        results.Add(book);
-                    }
-                }
+                BookList.Where(book =>
+                book.Title.Contains(userInput, StringComparison.InvariantCultureIgnoreCase) ||
+                book.Author.Contains(userInput, StringComparison.InvariantCultureIgnoreCase) ||
+                book.Genre.Contains(userInput, StringComparison.InvariantCultureIgnoreCase))
+                .ToList();
 
                 if (results.Count > 0)
                     return results;
@@ -58,24 +55,35 @@ public static class Catalog
 
 
     }
-    public static List<Book> ListAllBooks() 
-    { 
-        return BookList; 
+    public static List<Book> ListAllBooks()
+    {
+        return BookList;
     }
     public static List<Book> ListCheckedOut()
     {
         return BookList.Where(x => x.Status == BookStatus.CheckedOut).ToList();
     }
 
-    public static List<Book> SelectABook(string query)
+    public static List<Book> SelectABook(Book book)
     {
-        return BookList.Where(book =>
-            book.Title.Contains(query, StringComparison.InvariantCultureIgnoreCase) ||
-            book.Author.Contains(query, StringComparison.InvariantCultureIgnoreCase) ||
-            book.Genre.Contains(query, StringComparison.InvariantCultureIgnoreCase))
-            .ToList();
-    }
+        
+        
+        while (true)
+        {
+            Console.WriteLine("Please select a number.");
+            int selection = int.Parse(Console.ReadLine());
 
+            if (selection > 0 && selection < 15)
+            {
+                return B
+            }
+            else (selection < 0 && selection > 15)
+        }
+                    
+
+        
+       
+    }
     public static void CheckoutBook(Book book)
     {
         if (book.Status == BookStatus.OnShelf)
