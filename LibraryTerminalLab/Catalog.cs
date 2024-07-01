@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Spectre.Console;
+using System.Reflection.Metadata.Ecma335;
 
 namespace LibraryTerminalLab;
 
@@ -131,7 +132,11 @@ public static class Catalog
 
             for (int i = 0; i < books.Count(); i++)
             {
-                table.AddRow((i + 1).ToString(), books[i].Title, books[i].Author, books[i].Status.ToString(), books[i].Genre);
+                var color = "[green]";
+                if (books[i].Status == BookStatus.CheckedOut)
+                    color = "[red]";
+
+                table.AddRow($"{color}{(i + 1)}[/]", $"{color}{books[i].Title}[/]", $"{ color}{books[i].Author}[/]", $"{color}{books[i].Status}[/]", $"{color}{books[i].Genre}[/]");
                 screen.Refresh();
                 Thread.Sleep(100);
             }
@@ -192,5 +197,32 @@ public static class Catalog
             return false;
         }
 
+    }
+
+    public static void CheckoutOrReturn(Book book)
+    {
+        var currentStatus = "checked out";
+        var currentAction = "return it?";
+        if (book.Status == BookStatus.OnShelf)
+        {
+            currentStatus = "available";
+            currentAction = "check it out";
+        }
+
+        var userSelection = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .Title($"{book.Title} is currently {currentStatus}, would you like to {currentAction}?")
+                .PageSize(10)
+                .AddChoices("Yes", "No"));
+        if (userSelection == "Yes")
+        {
+            if (book.Status == BookStatus.OnShelf)
+                CheckoutBook(book);
+
+            else
+                ReturnBook(book);
+            Thread.Sleep(1000);
+        }
+        AnsiConsole.WriteLine($"Returning to the main menu.");
     }
 }
