@@ -1,11 +1,12 @@
 ﻿using LibraryTerminalLab;
 using Spectre.Console;
+using System.Data;
 using System.Net.NetworkInformation;
 
 
 
 string[] menuOptions = [
-    "Search for a Book to check out:",
+    "Search for a Book:",
     "List All Books:",
     "Return a Book:",
     "Exit:"
@@ -21,7 +22,14 @@ AnsiConsole.Progress()
 
         if (!Catalog.Load())
         {
+            AnsiConsole.WriteLine("No previous catalog found, restoring from backup...");
             topic1 = "Creating new catalog";
+            Thread.Sleep(100);
+        }
+        else
+        {
+            AnsiConsole.WriteLine("Catalog loaded successfully!");
+            Thread.Sleep(100);
         }
         // Define tasks
         var task1 = ctx.AddTask($"[green]{topic1}[/]");
@@ -31,21 +39,27 @@ AnsiConsole.Progress()
         {
             task1.Increment(1.43);
             task2.Increment(1.75);
-
-            Thread.Sleep(70);
-            if (task3.Value > 50)
+            if (task2.Value > 35)
             {
-                task3.StopTask();
-                task3.Description("[red]ERROR: Bribe not found[/]");
+                if (task3.Value > 50)
+                {
+                    task3.StopTask();
+                    task3.Description("[red]ERROR: Bribe not found[/]");
+
+                }
+                else
+                    task3.Increment(1.1);
             }
-            else
-                task3.Increment(1.1);
+            Thread.Sleep(70);
+
         }
+        Thread.Sleep(1000);
     });
 
 //replaced with above progress bar
 //Catalog.Load();
 
+AnsiConsole.Clear();
 
 //artsy title text
 var mainTitle = 
@@ -68,24 +82,26 @@ while (true)
 
     switch (userSwitch + 1)
     {
-        case 1: //Search for a book and check it out
+        case 1: //Search for a book and check it out. Expanded version for ease of readability
             List<Book> books = Catalog.SearchBooks();
-            //select a book from the list -- gives us a book back. Theoretical Section
             Book selectedBook = Catalog.SelectABook(books);
+            Catalog.CheckoutOrReturn(selectedBook);
+            break;
 
-            Catalog.CheckoutBook(selectedBook);
-            break;
-        case 2: //list all the books and attempt to check one out
+        case 2: //list all the books and 
             Console.WriteLine("Here is a List of All Books:");
-            Catalog.CheckoutBook(Catalog.SelectABook(Catalog.ListAllBooks()));
+            Catalog.CheckoutOrReturn(Catalog.SelectABook(Catalog.ListAllBooks()));
             break;
+
         case 3: //search for a book and attempt to return it
-            Catalog.ReturnBook(Catalog.SelectABook(Catalog.ListCheckedOut()));
+            Catalog.CheckoutOrReturn(Catalog.SelectABook(Catalog.ListCheckedOut()));
             break;
+
         case 4:
             Console.WriteLine("Thank You GoodBye!");
             Catalog.Save();
             return;
+
         default:
             Console.WriteLine("Invalid choice. Please select 1-4.");
             break;
