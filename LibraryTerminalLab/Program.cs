@@ -20,7 +20,7 @@ AnsiConsole.Progress()
 
         var bribeColor = "[blue]";
 
-        if (!Catalog.Load())
+        if (Catalog.Load())
         {
             AnsiConsole.WriteLine("No previous catalog found, restoring from backup...");
             topic1 = "Creating new catalog";
